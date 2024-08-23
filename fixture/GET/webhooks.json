@@ -1,0 +1,39 @@
+{
+  "links": {
+    "next": "https://example.zendesk.com/api/v2/webhooks?page[size]=100&page[after]=ijkl",
+    "prev": "https://example.zendesk.com/api/v2/webhooks?page[size]=100&page[before]=abcd"
+  },
+  "meta": {
+    "after_cursor": "ijkl",
+    "before_cursor": "abcd",
+    "has_more": true
+  },
+  "webhooks": [
+    {
+      "authentication": {
+        "add_position": "header",
+        "data": {
+          "username": "example_username"
+        },
+        "type": "basic_auth"
+      },
+      "created_at": "2020-10-20T08:16:28Z",
+      "created_by": "1234567",
+      "custom_headers": {
+        "header-one": "value_one",
+        "header-two": "value_two"
+      },
+      "endpoint": "https://example.com/status/200",
+      "http_method": "POST",
+      "id": "01EJFTSCC78X5V07NPY2MHR00M",
+      "name": "Example Webhook",
+      "request_format": "json",
+      "status": "active",
+      "subscriptions": [
+        "conditional_ticket_events"
+      ],
+      "updated_at": "2020-10-20T08:16:28Z",
+      "updated_by": "1234567"
+    }
+  ]
+}

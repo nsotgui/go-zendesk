@@ -7,6 +7,21 @@ import (
 	"testing"
 )
 
+func TestListWebhooks(t *testing.T) {
+	mockAPI := newMockAPI(http.MethodGet, "webhooks.json")
+	client := newTestClient(mockAPI)
+	defer mockAPI.Close()
+
+	webhooks, _, err := client.ListWebhooks(ctx, &WebhookListOptions{})
+	if err != nil {
+		t.Fatalf("Failed to get webhooks: %s", err)
+	}
+
+	if len(webhooks) != 1 {
+		t.Fatalf("expected length of groups is 1, but got %d", len(webhooks))
+	}
+}
+
 func TestCreateWebhook(t *testing.T) {
 	mockAPI := newMockAPI(http.MethodPost, "webhooks.json")
 	client := newTestClient(mockAPI)

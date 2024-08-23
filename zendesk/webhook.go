@@ -38,12 +38,57 @@ type WebhookSigningSecret struct {
 	Secret    string `json:"secret"`
 }
 
+// WebhookListOptions is options for ListWebhooks
+//
+// ref: https://developer.zendesk.com/api-reference/webhooks/webhooks-api/webhooks/#list-webhooks
+type WebhookListOptions struct {
+	PageOptions
+	FilterNameContains string `url:"filter[name_contains],omitempty"`
+	FilterStatus       string `url:"filter[status],omitempty"`
+	PageAfter          string `url:"page[after],omitempty"`
+	PageBefore         string `url:"page[before],omitempty"`
+	PageSize           string `url:"page[size],omitempty"`
+	Sort               string `url:"sort,omitempty"`
+}
+
 type WebhookAPI interface {
+	ListWebhooks(ctx context.Context, opts *WebhookListOptions) ([]Webhook, Page, error)
 	CreateWebhook(ctx context.Context, hook *Webhook) (*Webhook, error)
 	GetWebhook(ctx context.Context, webhookID string) (*Webhook, error)
 	UpdateWebhook(ctx context.Context, webhookID string, hook *Webhook) error
 	DeleteWebhook(ctx context.Context, webhookID string) error
 	GetWebhookSigningSecret(ctx context.Context, webhookID string) (*WebhookSigningSecret, error)
+}
+
+// ListWebhooks lists webhooks.
+//
+// https://developer.zendesk.com/api-reference/webhooks/webhooks-api/webhooks/#list-webhooks
+func (z *Client) ListWebhooks(ctx context.Context, opts *WebhookListOptions) ([]Webhook, Page, error) {
+	var data struct {
+		Webhooks []Webhook `json:"webhooks"`
+		Page
+	}
+
+	tmp := opts
+	if tmp == nil {
+		tmp = &WebhookListOptions{}
+	}
+
+	u, err := addOptions("/webhooks", tmp)
+	if err != nil {
+		return nil, Page{}, err
+	}
+
+	body, err := z.get(ctx, u)
+	if err != nil {
+		return nil, Page{}, err
+	}
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		return nil, Page{}, err
+	}
+	return data.Webhooks, data.Page, nil
 }
 
 // CreateWebhook creates new webhook.
