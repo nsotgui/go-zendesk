@@ -5,6 +5,7 @@
 //
 //	mockgen -source=api.go -destination=mock/client.go -package=mock -mock_names=API=Client github.com/nukosuke/go-zendesk/zendesk API
 //
+
 // Package mock is a generated GoMock package.
 package mock
 
@@ -749,18 +750,18 @@ func (mr *ClientMockRecorder) GetBrand(ctx, brandID any) *gomock.Call {
 }
 
 // GetCountTicketsInViews mocks base method.
-func (m *Client) GetCountTicketsInViews(arg0 context.Context, arg1 []string) ([]zendesk.ViewCount, error) {
+func (m *Client) GetCountTicketsInViews(ctx context.Context, ids []string) ([]zendesk.ViewCount, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCountTicketsInViews", arg0, arg1)
+	ret := m.ctrl.Call(m, "GetCountTicketsInViews", ctx, ids)
 	ret0, _ := ret[0].([]zendesk.ViewCount)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetCountTicketsInViews indicates an expected call of GetCountTicketsInViews.
-func (mr *ClientMockRecorder) GetCountTicketsInViews(arg0, arg1 interface{}) *gomock.Call {
+func (mr *ClientMockRecorder) GetCountTicketsInViews(ctx, ids any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCountTicketsInViews", reflect.TypeOf((*Client)(nil).GetCountTicketsInViews), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCountTicketsInViews", reflect.TypeOf((*Client)(nil).GetCountTicketsInViews), ctx, ids)
 }
 
 // GetCustomRoles mocks base method.
@@ -2455,6 +2456,22 @@ func (m *Client) ListTicketComments(ctx context.Context, ticketID int64, opts *z
 func (mr *ClientMockRecorder) ListTicketComments(ctx, ticketID, opts any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTicketComments", reflect.TypeOf((*Client)(nil).ListTicketComments), ctx, ticketID, opts)
+}
+
+// ListWebhooks mocks base method.
+func (m *Client) ListWebhooks(ctx context.Context, opts *zendesk.WebhookListOptions) ([]zendesk.Webhook, zendesk.Page, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListWebhooks", ctx, opts)
+	ret0, _ := ret[0].([]zendesk.Webhook)
+	ret1, _ := ret[1].(zendesk.Page)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// ListWebhooks indicates an expected call of ListWebhooks.
+func (mr *ClientMockRecorder) ListWebhooks(ctx, opts any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWebhooks", reflect.TypeOf((*Client)(nil).ListWebhooks), ctx, opts)
 }
 
 // MakeCommentPrivate mocks base method.
