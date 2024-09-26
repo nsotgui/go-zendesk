@@ -13,6 +13,7 @@ type Webhook struct {
 	Authentication *WebhookAuthentication `json:"authentication,omitempty"`
 	CreatedAt      time.Time              `json:"created_at,omitempty"`
 	CreatedBy      string                 `json:"created_by,omitempty"`
+	CustomHeaders  map[string]string      `json:"custom_headers,omitempty"`
 	Description    string                 `json:"description,omitempty"`
 	Endpoint       string                 `json:"endpoint"`
 	ExternalSource interface{}            `json:"external_source,omitempty"`
